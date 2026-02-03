@@ -21,8 +21,7 @@
 [//]: # (- [Contact]&#40;#contact&#41;)
 
 ## Introduction
-AuthService is a microservice responsible for handling user authentication and authorization in the Expense Tracker application. It manages user registration, login, JWT token generation, and validation.
-Based on [Lovepreet Singh's](https://github.com/AlphaDecodeX) YT Playlist.
+AuthService is a microservice responsible for handling user authentication and authorization in the Expense Tracker application.
 
 ## Features
 - User registration and login

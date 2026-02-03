@@ -9,7 +9,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
 
   # Kafka Properties
   kafka:
@@ -22,3 +22,9 @@ spring:
 
 server:
   port: ${AUTH_SERVICE_PORT:9898}
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

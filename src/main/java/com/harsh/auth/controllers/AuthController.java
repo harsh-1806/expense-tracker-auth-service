@@ -1,11 +1,15 @@
 package com.harsh.auth.controllers;
 
+import com.harsh.auth.dtos.responses.ApiResponse;
 import com.harsh.auth.dtos.responses.JwtResponseDTO;
+import com.harsh.auth.dtos.responses.ResponseUtil;
+import com.harsh.auth.enums.ErrorCode;
 import com.harsh.auth.services.impl.RefreshTokenServiceImpl;
 import com.harsh.auth.entities.RefreshToken;
 import com.harsh.auth.dtos.requests.UserInfoDto;
 import com.harsh.auth.services.impl.JwtServiceImpl;
 import com.harsh.auth.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +36,16 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(
             @RequestBody
-            UserInfoDto userInfoDto
+            UserInfoDto userInfoDto,
+            HttpServletRequest request
     ) {
         try {
             String userId = userService.signupUser(userInfoDto);
 
             if(userId == null) {
-                return new ResponseEntity<>("Already Exists!", HttpStatus.BAD_REQUEST);
+                return ResponseEntity
+                        .badRequest()
+                        .body(ResponseUtil.error(String.format("User : %s already Exists!", userInfoDto.getEmail()),"Already Exists!", ErrorCode.USER_ALREADY_EXISTS, request.getRequestURI()));
             }
 
             RefreshToken refreshToken  = refreshTokenService.createRefreshToken(userInfoDto.getUsername());
